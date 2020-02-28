@@ -37,6 +37,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // When new user is registered, we hook up a default profile for them on CREATION of the User Model
+    protected static function boot()
+    {
+        // boot gets called when this model is booted up
+        parent::boot();
+        // created event gets fired whenever a new user gets created
+        static::created(function ($user) {
+            $user->profile()->create([
+                'title' => $user->username
+            ]);
+        });
+    }
+
     // ACCESS RELATIONS...
 
     public function profile() 

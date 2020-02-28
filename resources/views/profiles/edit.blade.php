@@ -19,7 +19,7 @@
                   type="text" 
                   class="form-control @error('title') is-invalid @enderror" 
                   name="title"
-                  value="{{ $user->profile->title }}"
+                  value="{{ old('title') ?: $user->profile->title }}"
                   {{-- placeholder={{ $user->profile->title }} --}}
                   autocomplete="title" autofocus>
           
@@ -37,7 +37,7 @@
                   type="text" 
                   class="form-control @error('description') is-invalid @enderror" 
                   name="description"
-                  value="{{ $user->profile->description }}"
+                  value="{{ old('description') ?: $user->profile->description }}"
                   {{-- placeholder={{ $user->profile->description }} --}}
                   autocomplete="description" autofocus>
           
@@ -54,7 +54,7 @@
                   type="text" 
                   class="form-control @error('url') is-invalid @enderror" 
                   name="url"
-                  value="{{ $user->profile->url }}"
+                  value="{{ old('url') ?: $user->profile->url }}"
                   {{-- placeholder={{ $user->profile->url }} --}}
                   autocomplete="url" autofocus>
           

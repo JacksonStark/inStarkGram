@@ -17,12 +17,16 @@ class ProfilesController extends Controller
     
     public function edit(User $user)
     {
-        // dd($user);
+        // checks Profile Policy 'update' function for an auth check, before continuing
+        $this->authorize('update', $user->profile);
+
         return view('profiles.edit', compact('user'));
     }
 
-    public function update()
+    public function update(User $user)
     {
+        $this->authorize('update', $user->profile);
+
         $data = request()->validate([
             'title' => 'required',
             'description' => 'required',
@@ -31,20 +35,19 @@ class ProfilesController extends Controller
             'image_url' => ''
         ]);
 
-        // $imagePath = request('image_url')->store('uploads', 'public');
+        $imagePath = '';
 
-        // $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200,1200);
-        // $image->save();
+        if (request('image_url')) {
+            $imagePath = request('image_url')->store('profile', 'public');
+    
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000,1000);
+            $image->save();
+        }
 
-        // dd($data);
-
-        auth()->user()->profile->update(
-            $data
-            // 'title' => $data['title'],
-            // 'description' => $data['description'],
-            // 'url' => $data['url'],
-            // 'image_url' => '/storage/' . $imagePath,
-        );
+        auth()->user()->profile->update(array_merge(
+            $data,
+            ['image_url' => '/storage/' . $imagePath]
+        ));
 
         return redirect("/profile/" . $user->id);
 
