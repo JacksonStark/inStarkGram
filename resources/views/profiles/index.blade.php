@@ -4,7 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-3 p-5">
-            <img style="width: 120px" class="rounded-circle" src="{{ $user->profile->image_url }}">
+            {{-- Call to the the profileImage method on the Profile model --}}
+            <img style="width: 120px" class="rounded-circle" src="{{ $user->profile->profileImage() }}">
         </div>
         <div class='col-9 pt-5'>
             <div class='d-flex justify-content-between align-items-baseline'>
