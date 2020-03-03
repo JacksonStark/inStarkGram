@@ -25,4 +25,10 @@ class Profile extends Model
     {
         return $this->image_url ? $this->image_url : '/storage/profile/EhElpmjSrCXYfGTYwK225N7XC9NbRYQwm19ivwTe.png';
     }
+
+    public function followers()
+    {
+        // a Profile can have MANY Users that follow it (followers)
+        return $this->belongsToMany(User::class);
+    }
 }

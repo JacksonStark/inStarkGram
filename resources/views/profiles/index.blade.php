@@ -12,9 +12,9 @@
                 <div class='d-flex align-items-center'>
                     <h1>{{ $user->username }}</h1>
                     @can('follow', $user->profile)
-                    <div class='h3'>
-                        <follow-button></follow-button>
-                    </div>
+                        <div class='h3'>
+                            <follow-button follow-status="{{ $follows }}" user-id="{{ $user->id }}"></follow-button>
+                        </div>
                     @endcan
                 </div>
                 @can('update', $user->profile)
