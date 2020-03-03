@@ -31,22 +31,25 @@ class ProfilesController extends Controller
             'title' => 'required',
             'description' => 'required',
             'url' => 'url',
-            // 'image_url' => ['required', 'image'],
             'image_url' => ''
         ]);
 
-        $imagePath = '';
+        // because this is optional it is declared as empty
+        $imageArray = [];
 
         if (request('image_url')) {
+
             $imagePath = request('image_url')->store('profile', 'public');
-    
             $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000,1000);
             $image->save();
+
+            // where we then populate the empty associative array;
+            $imageArray = ['image_url' => '/storage/' . $imagePath];
         }
 
         auth()->user()->profile->update(array_merge(
             $data,
-            ['image_url' => '/storage/' . $imagePath]
+            $imageArray ?? []
         ));
 
         return redirect("/profile/" . $user->id);

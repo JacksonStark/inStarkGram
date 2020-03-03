@@ -14,7 +14,8 @@
       <div class="d-flex align-items-center">
 
         <div class="pr-3">
-          <img src="{{ $post->user->profile->image_url }}" alt="" class="w-100 rounded-circle" style="max-width: 40px;">
+          {{-- Profile Model method that will give us the User's profile pic OR the default one --}}
+          <img src="{{ $post->user->profile->profileImage() }}" alt="" class="w-100 rounded-circle" style="max-width: 40px;">
         </div>
         
         <div>

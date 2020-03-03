@@ -16,6 +16,14 @@ class ProfilePolicy
      * @param  \App\User  $user
      * @return mixed
      */
+
+    //  make sure users dont follow themselves LOL
+    public function follow(User $user, Profile $profile)
+    {
+        return $user->id != $profile->user_id;
+    }
+
+
     public function viewAny(User $user)
     {
         //
