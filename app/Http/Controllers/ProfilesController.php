@@ -10,14 +10,14 @@ use Intervention\Image\Facades\Image;
 
 class ProfilesController extends Controller
 {
-    public function index(User $user)
+    public function show(User $user)
     {
         // check if authenticated user follows the queried user
         $follows = (auth()->user()) ? auth()->user()->following->contains($user->id) : false;
         // $loggedIn = auth()->user() ? true : false;
         // dd($test);
 
-        return view('profiles.index', compact('user', 'follows'));
+        return view('profiles.show', compact('user', 'follows'));
     }
     
     public function edit(User $user)

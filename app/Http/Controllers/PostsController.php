@@ -19,6 +19,14 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
+    public function index()
+    {
+
+        $posts = Post::all();
+
+        return view('posts.index', compact('posts'));
+    }
+
     public function store()
     {
         // 'another field that needs no validation' => '',     ## set to an empty string to pass thru.

@@ -1938,6 +1938,11 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res.data); // toggles status to opposite
 
         _this.status = !_this.status;
+      })["catch"](function (errors) {
+        // if follow button clicked when not logged in, REDIRECT to login
+        if (errors.response.status === 401) {
+          window.location = '/login';
+        }
       });
     }
   }

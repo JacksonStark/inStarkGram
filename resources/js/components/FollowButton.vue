@@ -34,6 +34,12 @@
                     // toggles status to opposite
                     this.status = !this.status
                 })
+                .catch(errors => {
+                    // if follow button clicked when not logged in, REDIRECT to login
+                    if (errors.response.status === 401) {
+                        window.location = '/login';
+                    }
+                })
             }
         }
     }

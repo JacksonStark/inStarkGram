@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PostsController@index');
 
 Auth::routes();
 
@@ -31,9 +29,9 @@ Route::post('/follow/{user}', 'FollowsController@store');
 
 // PROFILE ROUTES...
 
-Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
+Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 
-Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.show');
+Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
 
 Route::patch('/profile/{user}', 'ProfilesController@update')->name('profile.update');
 
