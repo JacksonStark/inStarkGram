@@ -11,12 +11,19 @@
 |
 */
 
-Route::get('/', 'PostsController@index');
+use App\Mail\NewUserWelcomeMail;
 
 Auth::routes();
 
 
+Route::get('email', function () {
+  return new NewUserWelcomeMail();
+});
+
+
 // POST ROUTES...
+
+Route::get('/', 'PostsController@index');
 
 Route::get('/p/create', 'PostsController@create');
 
@@ -28,6 +35,8 @@ Route::post('/follow/{user}', 'FollowsController@store');
 
 
 // PROFILE ROUTES...
+
+Route::get('/discover', 'ProfilesController@index');
 
 Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 

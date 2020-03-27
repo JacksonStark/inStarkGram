@@ -2,22 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-
-use Illuminate\Http\Request;
 use App\User;
+use App\Profile;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfilesController extends Controller
 {
+
+    public function index(User $user)
+    {
+        $profiles = Profile::all();
+
+        // dd($profiles);
+
+        return view('profiles.index', compact('profiles'));
+    }
+
     public function show(User $user)
     {
         // check if authenticated user follows the queried user
         $follows = (auth()->user()) ? auth()->user()->following->contains($user->id) : false;
-        // $loggedIn = auth()->user() ? true : false;
-        // dd($test);
 
-        return view('profiles.show', compact('user', 'follows'));
+        // ✅ CACHING AVOIDS N+1 PROBLEM (repetitive queries) ✅
+
+        $postCount = Cache::remember(
+            'count.posts.' . $user->id, // unique key to remember
+            now()->addSeconds(30),      // time that value will stay stored
+            function () use ($user) {   // value doesn't already exist? run this.
+                return $user->posts->count();
+            });
+
+        $followersCount = Cache::remember(
+            'count.followers.' . $user->id,
+            now()->addSeconds(30),
+            function () use ($user) {
+                return $user->profile->followers->count();
+            });
+
+        $followingCount = Cache::remember(
+            'count.following.' . $user->id,
+            now()->addSeconds(30),
+            function () use ($user) {
+                return $user->following->count();
+            });
+
+        return view('profiles.show', compact('user', 'follows', 'postCount', 'followersCount', 'followingCount'));
     }
     
     public function edit(User $user)
