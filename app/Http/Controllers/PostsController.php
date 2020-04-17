@@ -32,7 +32,7 @@ class PostsController extends Controller
 
     public function store()
     {
-        // 'another field that needs no validation' => '',     ## set to an empty string to pass thru.
+        // 'another field that needs no validation' => '',  ## set to an empty string to pass thru.
         $data = request()->validate([
             'caption' => 'required',
             'image_url' => ['required','image'],

@@ -2,7 +2,6 @@
 
 namespace App;
 
-;
 use App\Mail\NewUserWelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Notifications\Notifiable;
@@ -77,7 +76,13 @@ class User extends Authenticatable
 
     public function posts()
     {
-        // dont need to import Profile since already in App namespace
+        // dont need to import Post since already in App namespace
         return $this->hasMany(Post::class)->orderBy('created_at', 'DESC');
+    }
+
+    public function image()
+    {
+        // Grab IMAGE related to this POST
+        return $this->morphOne(Image::class, 'imageable');
     }
 }

@@ -11,6 +11,8 @@
 |
 */
 
+
+use App\CustomFacades\Postcard;
 use App\Mail\NewUserWelcomeMail;
 
 Auth::routes();
@@ -20,6 +22,19 @@ Route::get('email', function () {
   return new NewUserWelcomeMail();
 });
 
+// ADVANCED LARAVEL TUTORIAL ROUTES...
+
+Route::get('pay', 'PayOrderController@store');
+
+Route::get('channel', 'ChannelController@index');
+
+Route::get('submissions/create', 'SubmissionController@create');
+
+Route::get('/facades', function() {
+  // Calling static method on Postcard Class 
+  // (Proxy, or facade for PostcardSendingService implementation)
+  Postcard::hello('message to be emailed out', 'jacksonstark77@hotmail.com');
+});
 
 // POST ROUTES...
 

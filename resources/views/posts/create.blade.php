@@ -33,7 +33,7 @@
         <div class="row">
           <label for="image" class="col-md-4 col-form-label">Post Image</label>
           
-          <input type="file" class="form-control-file" id="image" name="image_url">
+          <input type="file" class="form-control-file" id="image" name="image_file">
           
           @error('image_url')
           {{-- <span class="invalid-feedback" role="alert"> --}}
